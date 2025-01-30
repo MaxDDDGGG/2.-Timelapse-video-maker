@@ -193,8 +193,15 @@ def on_approve_changes_button_click():
     log(f"Approve changes duration: {time.time() - start_time_func} seconds.")
 
 # UI setup
-root = tk.Tk()  # Create root window first
+root = tk.Tk()  # Create root window first 
 root.title("Timelapse Recorder")
+
+# Icon
+icon = Image.open("icon.ico")
+icon = icon.resize((32, 32), Image.Resampling.LANCZOS)
+icon = ImageTk.PhotoImage(icon)
+root.iconphoto(True, icon)
+
 status_label = tk.Label(root, text="", font=('Helvetica', 14))
 status_label.pack(pady=5)
 
@@ -206,19 +213,23 @@ camera_label.pack(pady=5)
 frame_interval_label = tk.Label(root, text="Frame Interval (seconds):")
 frame_interval_label.pack(pady=5)
 frame_interval_entry = tk.Entry(root)
-frame_interval_entry.insert(tk.END, str(frame_interval))
+frame_interval_entry.insert(tk.END, (frame_interval))
 frame_interval_entry.pack(pady=2)
 
 # Create the video duration input field
 video_duration_label = tk.Label(root, text="Video Duration (seconds):")
 video_duration_label.pack(pady=5)
 video_duration_entry = tk.Entry(root)
-video_duration_entry.insert(tk.END, str(video_duration))
+video_duration_entry.insert(tk.END, (video_duration))
 video_duration_entry.pack(pady=2)
+
+# Create the approve changes button
+approve_changes_button = tk.Button(root, text="Submit Frames and Duration", command=on_approve_changes_button_click)
+approve_changes_button.pack(pady=5)
 
 # Create the timer label
 timer_label = tk.Label(root, text="Elapsed Time: 0s", font=('Helvetica', 14))
-timer_label.pack(pady=5)
+timer_label.pack(pady=10)
 
 # Create the start button
 start_button = tk.Button(root, text="Start Timelapse", state=tk.NORMAL, command=start_timelapse)
@@ -227,10 +238,6 @@ start_button.pack(pady=2)
 # Create the stop button
 stop_button = tk.Button(root, text="Stop Timelapse", command=stop_timelapse)
 stop_button.pack(pady=2)
-
-# Create the approve changes button
-approve_changes_button = tk.Button(root, text="Approve Changes", command=on_approve_changes_button_click)
-approve_changes_button.pack(pady=2)
 
 # Create the show feed button
 camera_index = 1
